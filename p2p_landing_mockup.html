@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Signal Circle — рекомендации от своих, а не от алгоритма</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: rgba(18, 24, 47, 0.72);
+      --panel-2: rgba(12, 17, 35, 0.82);
+      --text: #eef2ff;
+      --muted: #a5b4d4;
+      --line: rgba(255,255,255,0.09);
+      --accent: #7c9cff;
+      --accent-2: #6ef2c7;
+      --danger: #ff8b8b;
+      --shadow: 0 20px 80px rgba(0,0,0,0.38);
+      --radius: 24px;
+      --max: 1180px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background:
+      radial-gradient(1200px 700px at 15% 10%, rgba(124,156,255,0.18), transparent 60%),
+      radial-gradient(900px 500px at 85% 18%, rgba(110,242,199,0.11), transparent 60%),
+      linear-gradient(180deg, #080d1b 0%, #0d1326 100%);
+      color: var(--text); font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+    .nav { display:flex; align-items:center; justify-content:space-between; padding:24px 0; }
+    .brand { display:flex; align-items:center; gap:14px; font-weight:700; letter-spacing:0.2px; }
+    .logo { width:38px; height:38px; border-radius:12px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: 0 10px 30px rgba(124,156,255,0.35); position:relative; }
+    .logo:before, .logo:after { content:""; position:absolute; background:#09101e; border-radius:999px; }
+    .logo:before { inset: 8px 18px 8px 8px; }
+    .logo:after { inset: 8px 8px 8px 18px; opacity:.78; }
+    .navlinks { display:flex; gap:28px; color:var(--muted); font-size:14px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:10px; border-radius:999px; padding:14px 22px; font-weight:700; font-size:15px; transition:.2s ease; }
+    .btn.primary { background:linear-gradient(135deg, var(--accent), #8e7cff); color:white; box-shadow:0 14px 40px rgba(124,156,255,0.35); }
+    .btn.secondary { border:1px solid var(--line); background:rgba(255,255,255,0.03); color:var(--text); }
+    .btn:hover { transform: translateY(-1px); }
+    .hero { padding:42px 0 38px; display:grid; grid-template-columns: 1.08fr .92fr; gap:40px; align-items:center; }
+    .eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:13px; color:#c7d1ef; background:rgba(255,255,255,0.05); border:1px solid var(--line); padding:10px 14px; border-radius:999px; }
+    h1 { font-size:68px; line-height:0.98; margin:20px 0 18px; letter-spacing:-2.4px; }
+    .grad { background: linear-gradient(135deg, #ffffff 0%, #c9d6ff 35%, #90e6d0 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .sub { font-size:21px; line-height:1.55; color:var(--muted); max-width:700px; }
+    .cta { display:flex; gap:14px; margin-top:30px; flex-wrap:wrap; }
+    .mini { display:flex; gap:22px; margin-top:28px; flex-wrap:wrap; color:#d6def6; font-size:14px; }
+    .mini span { color:var(--muted); }
+    .panel { background: var(--panel); backdrop-filter: blur(18px); border:1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .hero-card { padding:18px; }
+    .browser { background: #0c1225; border:1px solid rgba(255,255,255,.06); border-radius: 20px; overflow:hidden; }
+    .browser-top { display:flex; align-items:center; gap:8px; padding:12px 14px; border-bottom:1px solid rgba(255,255,255,.06); }
+    .dot { width:10px; height:10px; border-radius:50%; background:#2a345d; }
+    .bar { margin-left:10px; background:rgba(255,255,255,.05); color:#8fa0d9; border-radius:999px; padding:8px 12px; font-size:13px; flex:1; }
+    .news { padding:18px; display:grid; gap:14px; }
+    .headline { background: rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); border-radius:18px; padding:16px; }
+    .headline .source { color:#97a5d8; font-size:12px; margin-bottom:8px; }
+    .headline .bad { font-size:20px; line-height:1.25; font-weight:800; }
+    .tag { display:inline-block; margin-top:12px; padding:8px 10px; border-radius:999px; font-size:12px; border:1px solid rgba(255,255,255,.08); color:#d9e0fa; }
+    .reply { margin-top:12px; background:rgba(110,242,199,.08); border:1px solid rgba(110,242,199,.20); border-radius:16px; padding:14px; }
+    .reply .label { color:var(--accent-2); font-size:12px; margin-bottom:8px; font-weight:700; }
+    .reply .good { color:#e8fffa; line-height:1.45; }
+    .section { padding:42px 0; }
+    .section h2 { font-size:44px; line-height:1.05; letter-spacing:-1.4px; margin:0 0 14px; }
+    .section p.lead { max-width:760px; color:var(--muted); font-size:18px; line-height:1.6; margin:0 0 24px; }
+    .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .card { padding:24px; }
+    .card h3 { margin:0 0 10px; font-size:22px; }
+    .card p { margin:0; color:var(--muted); line-height:1.6; }
+    .icon { width:42px; height:42px; border-radius:14px; display:grid; place-items:center; margin-bottom:16px; background:linear-gradient(135deg, rgba(124,156,255,.22), rgba(110,242,199,.16)); border:1px solid rgba(255,255,255,.08); }
+    .how { display:grid; grid-template-columns: .9fr 1.1fr; gap:22px; align-items:start; }
+    .steps { display:grid; gap:14px; }
+    .step { padding:20px; }
+    .num { width:32px; height:32px; border-radius:999px; display:grid; place-items:center; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08); font-size:13px; margin-bottom:14px; }
+    .mock { padding:18px; }
+    .phone { margin:auto; width:100%; max-width:460px; background:#0b1120; border:1px solid rgba(255,255,255,.08); border-radius:32px; padding:14px; box-shadow: var(--shadow); }
+    .screen { background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)); border-radius:24px; padding:16px; }
+    .chiprow { display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 14px; }
+    .chip { padding:8px 12px; border-radius:999px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); color:#cbd5f7; font-size:12px; }
+    .video { padding:14px; border-radius:18px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); margin-bottom:12px; }
+    .video .meta { font-size:12px; color:#8ea0d7; margin-bottom:8px; }
+    .video .title { font-size:16px; line-height:1.35; font-weight:700; }
+    .note { margin-top:10px; border-left:3px solid var(--accent-2); padding-left:12px; color:#dbeee8; font-size:14px; line-height:1.5; }
+    .pricing { display:grid; grid-template-columns: 1fr 1fr; gap:20px; }
+    .price { padding:28px; position:relative; overflow:hidden; }
+    .price h3 { margin:0; font-size:28px; }
+    .price .sum { font-size:52px; font-weight:800; letter-spacing:-2px; margin:18px 0 8px; }
+    .price ul { margin:18px 0 0; padding-left:18px; color:var(--muted); line-height:1.95; }
+    .pill { display:inline-flex; padding:8px 12px; font-size:12px; border-radius:999px; background:rgba(124,156,255,.12); border:1px solid rgba(124,156,255,.24); color:#dbe3ff; }
+    .footer { padding:30px 0 60px; color:var(--muted); font-size:14px; }
+    .final { padding:28px; display:flex; justify-content:space-between; align-items:center; gap:20px; }
+    .quote { font-size:24px; line-height:1.35; max-width:760px; }
+    @media (max-width: 980px) {
+      .hero, .how, .pricing, .grid3 { grid-template-columns:1fr; }
+      h1 { font-size:52px; letter-spacing:-1.8px; }
+      .section h2 { font-size:36px; }
+      .quote { font-size:20px; }
+    }
+    @media (max-width: 640px) {
+      .navlinks { display:none; }
+      .hero { padding-top:20px; }
+      h1 { font-size:42px; }
+      .sub { font-size:18px; }
+      .cta { flex-direction:column; }
+      .btn { width:100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="nav">
+      <div class="brand">
+        <div class="logo"></div>
+        <div>
+          <div>Signal Circle</div>
+        </div>
+      </div>
+      <div class="navlinks">
+        <a href="#why">Почему</a>
+        <a href="#how">Как работает</a>
+        <a href="#pricing">Цены</a>
+      </div>
+      <a class="btn secondary" href="#pricing">Ранний доступ</a>
+    </div>
+
+    <section class="hero">
+      <div>
+        <div class="eyebrow">P2P рекомендации • без ленты • без алгоритма • только свои</div>
+        <h1><span class="grad">Тебе советует не платформа.</span><br>Тебе советуют свои.</h1>
+        <div class="sub">
+          Signal Circle — это спокойный слой поверх интернета. Вы с другом обмениваетесь тем, что реально стоит внимания, и вместе режете шум, истерику и алгоритмическую жвачку.
+        </div>
+        <div class="cta">
+          <a class="btn primary" href="#pricing">Получить мокап раннего доступа</a>
+          <a class="btn secondary" href="#how">Посмотреть сценарий</a>
+        </div>
+        <div class="mini">
+          <div><strong>Zero feed.</strong> <span>Никакой бесконечной ленты</span></div>
+          <div><strong>P2P by design.</strong> <span>Малый круг вместо толпы</span></div>
+          <div><strong>Calm tech.</strong> <span>Настроил и забыл</span></div>
+        </div>
+      </div>
+
+      <div class="panel hero-card">
+        <div class="browser">
+          <div class="browser-top">
+            <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+            <div class="bar">youtube.com / news / whatever</div>
+          </div>
+          <div class="news">
+            <div class="headline">
+              <div class="source">Видео из интернета</div>
+              <div class="bad">«Срочно смотри это видео, пока алгоритм не утопил тебя в очередном мусоре»</div>
+              <div class="tag">Обычный интернет</div>
+            </div>
+            <div class="headline">
+              <div class="source">Комментарий от своего</div>
+              <div class="reply">
+                <div class="label">Что пишет друг</div>
+                <div class="good">Первые 8 минут вода. Смотри с 09:12. Основная мысль сильная: человек показывает, как СМИ натягивают драму на цифры.</div>
+              </div>
+              <div class="tag">Signal Circle</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="section" id="why">
+    <div class="wrap">
+      <h2>Интернет не обязан быть одиночной камерой с алгоритмом.</h2>
+      <p class="lead">Сегодня почти весь контент проходит через машину удержания внимания. Ты один против ленты, рекомендаций и манипулятивных заголовков. Signal Circle возвращает старый человеческий механизм: лишнюю пару глаз, доверенный фильтр и малый круг здравого смысла.</p>
+      <div class="grid3">
+        <div class="panel card">
+          <div class="icon">🧠</div>
+          <h3>Меньше шума</h3>
+          <p>Вместо тысячи случайных советов — короткая человеческая выжимка от того, чьему вкусу ты реально доверяешь.</p>
+        </div>
+        <div class="panel card">
+          <div class="icon">🤝</div>
+          <h3>Больше субъектности</h3>
+          <p>Не корпорация решает, что тебе смотреть, а твой круг. Это кооперативный режим, а не одиночная игра против платформы.</p>
+        </div>
+        <div class="panel card">
+          <div class="icon">🌙</div>
+          <h3>Спокойная технология</h3>
+          <p>Никаких бесконечных пушей, метрик тщеславия и принуждения “возвращаться в приложение”. Получил сигнал и пошел дальше жить.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="how">
+    <div class="wrap">
+      <h2>Как это работает</h2>
+      <p class="lead">Не как соцсеть. Не как очередной мессенджер. Скорее как доверенный слой поверх уже существующего интернета.</p>
+      <div class="how">
+        <div class="steps">
+          <div class="panel step">
+            <div class="num">01</div>
+            <h3>Добавляешь одного человека, вкусу которого веришь</h3>
+            <p>Не “аудиторию”. Не “подписчиков”. Не толпу. Только своего человека — друга, брата, партнера, коллегу.</p>
+          </div>
+          <div class="panel step">
+            <div class="num">02</div>
+            <h3>Делишься не ссылкой, а контекстом</h3>
+            <p>“Смотри с 12-й минуты”, “это мусор”, “это годно”, “это сильное, но однобокое”. Не просто URL, а человеческий фильтр поверх URL.</p>
+          </div>
+          <div class="panel step">
+            <div class="num">03</div>
+            <h3>Получаешь чужой отбор без ленты и без инфошума</h3>
+            <p>Когда открываешь привычные сайты, видишь только метки и заметки от своих. Платформа остается той же, но власть над вниманием меняется.</p>
+          </div>
+        </div>
+        <div class="mock">
+          <div class="phone">
+            <div class="screen">
+              <strong>Круг Сергея</strong>
+              <div class="chiprow">
+                <div class="chip">1 друг в бесплатной версии</div>
+                <div class="chip">без ленты</div>
+                <div class="chip">локально и спокойно</div>
+              </div>
+              <div class="video">
+                <div class="meta">От Ивана • YouTube • 2 часа назад</div>
+                <div class="title">Почему новости драматизируют падение рынка и что там реально произошло</div>
+                <div class="note">Смотри с 06:40. Первые минуты кликбейт. Дальше уже факты и нормальный разбор.</div>
+              </div>
+              <div class="video">
+                <div class="meta">От тебя • YouTube • вчера</div>
+                <div class="title">Разбор плохой архитектуры рекомендаций на примере Spotify Jam</div>
+                <div class="note">Хорошая мысль про то, что они сделали совместную очередь, а не совместный фильтр. Ключевой баг в продуктовой философии.</div>
+              </div>
+              <div class="video">
+                <div class="meta">Черновик приглашения</div>
+                <div class="note">“Слушай, я тестирую штуку, где рекомендации идут не от алгоритма, а от своего человека. Хочу вернуть нормальный способ вместе фильтровать интернет. Попробуешь со мной?”</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>Для кого это</h2>
+      <p class="lead">Не для масс-маркета, который хочет еще одну игрушку. Для людей, которым нужен доверенный фильтр и человеческая навигация по шумной среде.</p>
+      <div class="grid3">
+        <div class="panel card">
+          <div class="icon">🛡️</div>
+          <h3>Для тех, кто устал от алгоритмов</h3>
+          <p>Хочешь меньше думскроллинга, меньше кликбейта, меньше ощущения, что тебя ведут как скот через ленту.</p>
+        </div>
+        <div class="panel card">
+          <div class="icon">🎯</div>
+          <h3>Для малых кругов доверия</h3>
+          <p>У тебя уже есть 1–3 человека, чье мнение реально экономит тебе время. Продукт просто делает этот процесс удобным.</p>
+        </div>
+        <div class="panel card">
+          <div class="icon">⚙️</div>
+          <h3>Для тех, кто хочет technology that steps aside</h3>
+          <p>Инструмент должен помочь и уйти в фон, а не превращаться в новую зависимость и новый центр жизни.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="pricing">
+    <div class="wrap">
+      <h2>Простая монетизация без цирка</h2>
+      <p class="lead">Бесплатная версия дает реальную ценность. Платная продает не жадность, а удобство: больше людей в круге, более гладкий UX и больше контроля.</p>
+      <div class="pricing">
+        <div class="panel price">
+          <div class="pill">Бесплатно</div>
+          <h3>Starter Circle</h3>
+          <div class="sum">0€</div>
+          <div style="color:var(--muted)">Чтобы попробовать механику “свои советуют лучше алгоритма”.</div>
+          <ul>
+            <li>1 доверенный человек в круге</li>
+            <li>Базовые заметки к ссылкам</li>
+            <li>Простой интерфейс без лишнего шума</li>
+            <li>Никакой подписки ради галочки</li>
+          </ul>
+        </div>
+        <div class="panel price" style="background:linear-gradient(180deg, rgba(22,29,57,.92), rgba(13,18,36,.94)); border-color:rgba(124,156,255,.25)">
+          <div class="pill">Для тех, кто хочет жить внутри малого круга</div>
+          <h3>Circle Pro</h3>
+          <div class="sum">6€</div>
+          <div style="color:var(--muted)">в месяц или 49€ в год. Платишь за снятие трения, не за право дышать.</div>
+          <ul>
+            <li>До 5 доверенных людей</li>
+            <li>Умные шаблоны приглашения без кринжа</li>
+            <li>Расширенные пометки: “смотри с таймкода”, “в мусор”, “годно”</li>
+            <li>Приоритетный доступ к ранним фичам</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="panel final">
+        <div class="quote">Интернет не должен быть местом, где ты один против махины. Иногда достаточно одного нормального человека, который скажет: “это мусор, это смотри, а это вообще не трать время”.</div>
+        <a class="btn primary" href="#">Запросить ранний доступ</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap footer">
+    Mock landing page concept for an anti-algorithm, trust-based recommendation product.
+  </div>
+</body>
+</html>
